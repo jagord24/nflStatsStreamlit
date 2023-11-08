@@ -120,7 +120,7 @@ df_team.loc[:,'cumulative_play_differential_sign'] = df_team['cumulative_play_di
 df_team.loc[:,'opponent'] = df_team.apply(lambda row: row['away_team'] if row['home_team'] == team else row['home_team'], axis=1)
 
 # add column for team
-df_team.loc[:,'team'] = team
+# df_team.loc[:,'team'] = team
 
 # st.dataframe(df_team[['game_id', 'qtr', 'desc', 'points_scored', 'game_seconds_elapsed', 
 #                       'season_seconds_elapsed', 'points_allowed', 'play_differential', 
