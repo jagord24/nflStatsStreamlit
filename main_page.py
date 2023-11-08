@@ -32,7 +32,14 @@ data_load_state.text('Loading data...done!')
 # aggregate the sum of passing_yards by passer_player_name
 
 passing_yards = data[data['posteam'] == team].groupby('passer_player_name').passing_yards.sum().reset_index()[['passer_player_name', 'passing_yards']]
-st.write(passing_yards.sort_values(by='passing_yards', ascending=False))
+st.dataframe(passing_yards[passing_yards['passing_yards'] > 0].sort_values(by='passing_yards', ascending=False),
+                column_config={
+                'passer_player_name': 'Player',
+                'passing_yards': 'Passing Yards'
+                },
+             hide_index=True,
+             use_container_width=True
+        )
 
 passers = data[data.posteam == team].passer_player_name.unique()
 
