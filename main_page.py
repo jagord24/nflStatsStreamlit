@@ -15,11 +15,11 @@ number = st.number_input('Enter a season', step=1, min_value=2001, max_value=202
 
 # create selectbox for team selection
 
-teams = ['All', 'ARI', 'ATL', 'BAL', 'BUF', 'CAR', 'CHI', 'CIN', 'CLE', 'DAL', 'DEN',
+teams = ['ARI', 'ATL', 'BAL', 'BUF', 'CAR', 'CHI', 'CIN', 'CLE', 'DAL', 'DEN',
             'DET', 'GB', 'HOU', 'IND', 'JAX', 'KC', 'LAC', 'LAR', 'LV', 'MIA',
             'MIN', 'NE', 'NO', 'NYG', 'NYJ', 'PHI', 'PIT', 'SEA', 'SF', 'TB',
             'TEN', 'WAS']
-team = st.selectbox('Select a team', teams)
+team = st.selectbox('Select a team to get started', teams)
 
 @st.cache_data
 def get_pbp_data(year):
