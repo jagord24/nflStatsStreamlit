@@ -21,12 +21,17 @@ teams = ['ARI', 'ATL', 'BAL', 'BUF', 'CAR', 'CHI', 'CIN', 'CLE', 'DAL', 'DEN',
             'TEN', 'WAS']
 team = st.selectbox('Select a team to get started', teams)
 
-@st.cache_data
+columns_for_download = ['game_id', 'home_team', 'away_team', 'quarter_end', 'sp', 'game_half', 
+                        'game_seconds_remaining', 'posteam_score', 'defteam_score', 'posteam_score_post',
+                        'defteam_score_post', 'play_id', 'desc', 'posteam', 'defteam', 'week', 'qtr']
+
+# @st.cache_data
 def get_pbp_data(year):
     url = url = f"https://github.com/nflverse/nflverse-data/releases/download/pbp/play_by_play_{year}.parquet"
-    df = pd.read_parquet(url)
+    df = pd.read_parquet(url, columns=columns_for_download)
     # df = df[(df.home_team == team) | (df.away_team == team)].reset_index(drop=True)
     return df
+
 
 # @st.cache_data
 def filter_pbp_for_team(df, team):
@@ -46,10 +51,10 @@ data = get_pbp_data(number)
 data_load_state.text('Loading data...done!')
 
 # aggregate the sum of passing_yards by passer_player_name
-if team == 'All':
-    passing_yards = data.groupby('passer_player_name').passing_yards.sum().reset_index()
-else:
-    passing_yards = filter_pbp_for_team(data[data['posteam'] == team], team).groupby('passer_player_id').passing_yards.sum().reset_index()
+# if team == 'All':
+#     passing_yards = data.groupby('passer_player_name').passing_yards.sum().reset_index()
+# else:
+#     passing_yards = filter_pbp_for_team(data[data['posteam'] == team], team).groupby('passer_player_id').passing_yards.sum().reset_index()
 
 # st.subheader(f'Passing Yard Leaders for {number}')
 # st.dataframe(passing_yards[passing_yards['passing_yards'] > 0].sort_values(by='passing_yards', ascending=False),
