@@ -39,7 +39,7 @@ def get_roster_data(year):
     df = pd.read_parquet(url)
     return df
 
-roster = get_roster_data(number)
+# roster = get_roster_data(number)
 
 data_load_state = st.text('Loading data...')
 data = get_pbp_data(number)
@@ -68,10 +68,10 @@ def get_scoring_plays(df):
                         # (df['play_id'] == 1) # include start of game in addition to the end of each quarter
                     ]
     return scoring_plays
-scoring_plays = get_scoring_plays(data)
+# scoring_plays = get_scoring_plays(data)
 
-# get the plays that were the start of each game. this should be the minimum play_id for each game_id
-game_starts = data.groupby('game_id').play_id.min().reset_index()
+# # get the plays that were the start of each game. this should be the minimum play_id for each game_id
+# game_starts = data.groupby('game_id').play_id.min().reset_index()
 
 # st.dataframe(scoring_plays[['desc', 'home_team', 'away_team', 'total_home_score', 'total_away_score', 'play_id', 'game_seconds_remaining', 'game_half']],
 #              use_container_width=True)
