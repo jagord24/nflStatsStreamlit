@@ -28,12 +28,12 @@ def get_pbp_data(year):
     # df = df[(df.home_team == team) | (df.away_team == team)].reset_index(drop=True)
     return df
 
-@st.cache_data
+# @st.cache_data
 def filter_pbp_for_team(df, team):
     df = df[(df.home_team == team) | (df.away_team == team)].reset_index(drop=True)
     return df
 
-@st.cache_data
+# @st.cache_data
 def get_roster_data(year):
     url = f'https://github.com/nflverse/nflverse-data/releases/download/rosters/roster_{year}.parquet'
     df = pd.read_parquet(url)
