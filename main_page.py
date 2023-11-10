@@ -209,6 +209,16 @@ fig.update_yaxes(
 )
 st.plotly_chart(fig, use_container_width=True)
 
-cols_to_display = ['week', 'opponent', 'qtr', 'points_scored', 'points_allowed', 'desc', 'cumulative_play_differential', 'cumulative_play_differential_sign']
+cols_to_display = ['opponent', 'qtr', 'desc']
+
+'''
+## Scoring Plays
+'''
 st.dataframe(df_team[cols_to_display],
+                use_container_width=True,
+                column_config={
+                    'opponent': 'Opponent',
+                    'qtr': 'Quarter',
+                    'desc': 'Play Description'
+                },
              hide_index=True)
