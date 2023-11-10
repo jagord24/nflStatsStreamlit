@@ -149,11 +149,11 @@ fig = go.Figure() # or any Plotly Express function e.g. px.bar(...)
 fig.update_traces(connectgaps=True)
 fig = px.line(df_team, x='season_seconds_elapsed', y='cumulative_play_differential', 
               title = f"{team} Cumulative Score Differential by Week for {number}",
-            #   color = 'cumulative_play_differential_sign',
-            #   color_discrete_map={
-            #         'Positive': 'green',
-            #         'Negative': 'red'
-            #     },
+            #   markers=True,
+            #   markers=dict(
+            #     color='red',
+            #     size=6,
+            #   ),
               labels={
                     'season_seconds_elapsed': 'Week',
                     'cumulative_play_differential': 'Cumulative Score Differential'
@@ -170,6 +170,14 @@ fig = px.line(df_team, x='season_seconds_elapsed', y='cumulative_play_differenti
                 }
                 )
 
+
+fig.data[0].line.color = 'DarkSlateGrey'
+
+# fig.add_trace(go.Scatter(
+#     x=df_team[df_team['sp'] == 1]['season_seconds_elapsed'], y=df_team[df_team['sp'] == 1]['cumulative_play_differential'],
+#     mode='markers',
+#     name='Scoring Plays'
+#     ))
 # add vertical red lines every 3600 seconds
 
 for i in range(1, max(df['week'])+1):
@@ -185,7 +193,6 @@ ticktext = [f'Wk {i} Start' for i in range(1, max(df['week'])+ 2)]
 # print(tickvals)
 # print(ticktext)
 
-fig.data[0].line.color = 'green'
 
 fig.update_xaxes(
     showgrid=False,
