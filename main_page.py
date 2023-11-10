@@ -4,7 +4,7 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go # or plotly.express as px
 
-st.title('Season Passing Leader')
+st.title('Cumulative Score Differential')
 
 # create range of seasons to select from
 
@@ -222,3 +222,8 @@ st.dataframe(df_team[cols_to_display],
                     'desc': 'Play Description'
                 },
              hide_index=True)
+
+
+'''
+*All data from nflfastR accessed via https://github.com/nflverse/nflverse-pbp*
+'''
