@@ -19,7 +19,6 @@ teams = ['ARI', 'ATL', 'BAL', 'BUF', 'CAR', 'CHI', 'CIN', 'CLE', 'DAL', 'DEN',
             'DET', 'GB', 'HOU', 'IND', 'JAX', 'KC', 'LAC', 'LAR', 'LV', 'MIA',
             'MIN', 'NE', 'NO', 'NYG', 'NYJ', 'PHI', 'PIT', 'SEA', 'SF', 'TB',
             'TEN', 'WAS']
-team = st.selectbox('Select a team to get started', teams)
 
 columns_for_download = ['game_id', 'home_team', 'away_team', 'quarter_end', 'sp', 'game_half', 
                         'game_seconds_remaining', 'posteam_score', 'defteam_score', 'posteam_score_post',
@@ -44,10 +43,19 @@ def get_roster_data(year):
     df = pd.read_parquet(url)
     return df
 
+def get_team_list(df):
+    home_teams = df.home_team.unique().tolist()
+    away_teams = df.away_team.unique().tolist()
+    # combine the two lists and remove duplicates, sort in alphabetical order
+    teams = sorted(list(set(home_teams + away_teams)))
+    return teams
+
 # roster = get_roster_data(number)
 
 data_load_state = st.text('Loading data...')
 data = get_pbp_data(number)
+teams = get_team_list(data)
+team = st.selectbox('Select a team to get started', teams)
 data_load_state.text('Loading data...done!')
 
 # aggregate the sum of passing_yards by passer_player_name
@@ -68,9 +76,9 @@ data_load_state.text('Loading data...done!')
 
 def get_scoring_plays(df):
     scoring_plays = df[
-                        (df['quarter_end'] == 1) | # additional data points for when there are scoreless games or quarters
-                        (df['sp'] == 1)  # limit dataset to scoring plays
-                        # (df['play_id'] == 1) # include start of game in addition to the end of each quarter
+                        # (df['quarter_end'] == 1) | # additional data points for when there are scoreless games or quarters
+                        (df['sp'] == 1) | # limit dataset to scoring plays
+                        (df['play_id'] == 1)  # include start of game in addition to the end of each quarter
                     ]
     return scoring_plays
 # scoring_plays = get_scoring_plays(data)
@@ -194,6 +202,6 @@ fig.update_yaxes(
 )
 st.plotly_chart(fig, use_container_width=True)
 
-cols_to_display = ['week', 'opponent', 'qtr', 'points_scored', 'points_allowed', 'desc']
+cols_to_display = ['week', 'opponent', 'qtr', 'points_scored', 'points_allowed', 'desc', 'cumulative_play_differential', 'cumulative_play_differential_sign']
 st.dataframe(df_team[cols_to_display],
              hide_index=True)
