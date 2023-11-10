@@ -161,14 +161,31 @@ fig = px.line(df_team, x='season_seconds_elapsed', y='cumulative_play_differenti
                 template='plotly_white',
                 height=600,
                 width=1200,
+                # on hover i want to see the week and the play description
+                hover_name='desc',
                 hover_data={
-                    'week': True,
-                    'season_seconds_elapsed': ':,',
-                    'play_id': True,
-                    'game_id': True,
-                    'desc': True
+                    'season_seconds_elapsed': False,
+                    'desc': False
                 }
+
+                # hover_info='cumulative_play_differential'
+                # hover_data={
+                #     'week': 'Week',
+                #     'desc': 'Play Description'
+                # }
                 )
+
+# fig.update_traces(mode="lines", hovertemplate=None)
+
+
+# fig.update_layout(
+#     hovermode="x unified",
+#     hoverlabel=dict(
+#         bgcolor="white",
+#         font_size=12
+#     )
+#     )
+
 
 
 fig.data[0].line.color = 'DarkSlateGrey'
@@ -207,6 +224,10 @@ fig.update_xaxes(
 fig.update_yaxes(
     showgrid=False
 )
+
+fig.update_xaxes(showspikes=True)
+fig.update_yaxes(showspikes=True)
+
 st.plotly_chart(fig, use_container_width=True)
 
 cols_to_display = ['opponent', 'qtr', 'desc']
